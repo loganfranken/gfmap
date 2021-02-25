@@ -1,0 +1,24 @@
+{
+  "name": "gfmap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loganfranken/gfmap.git"
+  },
+  "author": "Logan Franken <loganfranken@gmail.com> (http://www.loganfranken.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loganfranken/gfmap/issues"
+  },
+  "homepage": "https://github.com/loganfranken/gfmap#readme",
+  "dependencies": {
+    "request": "^2.88.2",
+    "yelp-fusion": "^3.0.0"
+  },
+  "type": "module"
+}
