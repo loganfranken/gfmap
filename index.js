@@ -14,7 +14,8 @@ router.get('/api/businesses/', async (ctx) => {
 
   if(!isValidCoordinate(lat) || !isValidCoordinate(lon))
   {
-    ctx.body = "Invalid coordinates: " + lat + ", " + lon;
+    ctx.status = 400;
+    ctx.body = "Invalid coordinates";
     return;
   }
 
@@ -24,7 +25,8 @@ router.get('/api/businesses/', async (ctx) => {
     longitude: lon
   });
 
-  ctx.body = response.jsonBody.businesses[0].name;
+  const businesses = response.jsonBody.businesses.map(b => ({ name: b.name }));
+  ctx.body = businesses;
 
 });
 
