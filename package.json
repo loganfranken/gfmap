@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/loganfranken/gfmap#readme",
   "dependencies": {
+    "@koa/router": "^10.0.0",
     "koa": "^2.13.1",
     "request": "^2.88.2",
     "yelp-fusion": "^3.0.0"
