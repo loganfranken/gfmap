@@ -7,12 +7,21 @@ const app = new Koa();
 const router = new Router();
 const yelpClient = yelp.client(config.apiKey);
 
-router.get('/api/businesses', async (ctx) => {
+router.get('/api/businesses/', async (ctx) => {
+
+  const lat = ctx.request.query.lat;
+  const lon = ctx.request.query.lon;
+
+  if(!isValidCoordinate(lat) || !isValidCoordinate(lon))
+  {
+    ctx.body = "Invalid coordinates: " + lat + ", " + lon;
+    return;
+  }
 
   const response = await yelpClient.search({
     term: 'gluten free',
-    latitude: '47.606209',
-    longitude: '-122.332069'
+    latitude: lat,
+    longitude: lon
   });
 
   ctx.body = response.jsonBody.businesses[0].name;
@@ -24,3 +33,8 @@ app
   .use(router.allowedMethods())
 
 app.listen(config.port);
+
+function isValidCoordinate(input)
+{
+  return input && input.match(/^-?[0-9]{1,3}\.[0-9]{6}$/g);
+}
