@@ -1,14 +1,20 @@
 import config from './config.js';
+import Koa from 'koa';
 import yelp from 'yelp-fusion';
 
-const client = yelp.client(config.apiKey);
+const app = new Koa();
 
-client.search({
-  term: 'gluten free',
-  latitude: '47.606209',
-  longitude: '-122.332069'
-}).then(response => {
-  console.log(response.jsonBody.businesses[0].name);
-}).catch(e => {
-  console.log(e);
+app.use(async ctx => {
+
+  const client = yelp.client(config.apiKey);
+  const response = await client.search({
+    term: 'gluten free',
+    latitude: '47.606209',
+    longitude: '-122.332069'
+  });
+
+  ctx.body = response.jsonBody.businesses[0].name;
+
 });
+
+app.listen(config.port);
