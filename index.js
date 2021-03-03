@@ -1,5 +1,6 @@
 import config from './config.js';
 import Koa from 'koa';
+import serve from 'koa-static';
 import Router from '@koa/router';
 import yelp from 'yelp-fusion';
 
@@ -25,18 +26,24 @@ router.get('/api/businesses/', async (ctx) => {
     longitude: lon
   });
 
-  const businesses = response.jsonBody.businesses.map(b => ({ name: b.name }));
-  ctx.body = businesses;
+  ctx.body = response.jsonBody.businesses.map(business => ({
+    name: business.name,
+    coordinates: {
+      latitude: business.coordinates.latitude,
+      longitude: business.coordinates.longitude
+    }
+  }));
 
 });
 
 app
   .use(router.routes())
   .use(router.allowedMethods())
+  .use(serve('./public'));
 
 app.listen(config.port);
 
 function isValidCoordinate(input)
 {
-  return input && input.match(/^-?[0-9]{1,3}\.[0-9]{6}$/g);
+  return input && input.match(/^-?[0-9]{1,3}\.[0-9]*$/g);
 }
