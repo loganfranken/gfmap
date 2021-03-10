@@ -17,11 +17,22 @@
   },
   "homepage": "https://github.com/loganfranken/gfmap#readme",
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.11.2",
     "@koa/router": "^10.0.0",
     "koa": "^2.13.1",
     "koa-static": "^5.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "request": "^2.88.2",
     "yelp-fusion": "^3.0.0"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
+  }
 }
