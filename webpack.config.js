@@ -2,7 +2,7 @@ import 'webpack';
 import path from 'path';
 
 export default {
-  entry: './public/script/index.js',
+  entry: ['babel-polyfill', './public/script/index.js'],
   output: {
     filename: 'bundle.js',
     path: path.resolve('./public/script'),

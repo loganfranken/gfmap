@@ -19,6 +19,7 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.11.2",
     "@koa/router": "^10.0.0",
+    "babel-polyfill": "^6.26.0",
     "koa": "^2.13.1",
     "koa-static": "^5.0.0",
     "react": "^17.0.1",
