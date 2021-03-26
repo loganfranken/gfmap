@@ -13,19 +13,19 @@ export default class extends React.Component
         this.initGoogleMaps();
     }
 
-    componentDidUpdate(props)
+    componentDidUpdate()
     {
-        if(props.lat === null || props.lon === null)
+        if(this.props.lat === null || this.props.lon === null)
         {
             return;
         }
 
         const map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: props.lat, lng: props.lon },
+            center: { lat: this.props.lat, lng: this.props.lon },
             zoom: 15,
         });
 
-        props.businesses.forEach((business) => {
+        this.props.businesses.forEach((business) => {
     
             new google.maps.Marker({
                 position: { lat: business.coordinates.latitude, lng: business.coordinates.longitude },
@@ -48,7 +48,11 @@ export default class extends React.Component
     render()
     {
         return (
-            <div id="map"></div>
+            <div id="map">
+                <ul id="list">
+                    {this.props.businesses.map(({ name }) => <li>{name}</li>)}
+                </ul>
+            </div>
         )
     }
 }
