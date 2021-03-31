@@ -1,5 +1,6 @@
 import BusinessList from './BusinessList.js';
 import BusinessMap from './BusinessMap.js';
+import LocationSearchControl from './LocationSearchControl.js';
 import React from 'react';
 
 export default class extends React.Component
@@ -10,8 +11,12 @@ export default class extends React.Component
         this.state = {
             lat: null,
             lon: null,
-            businesses: []
+            businesses: [],
+            locationQuery: null
         }
+
+        this.handleOnLocationSearchControlSubmit = this.handleOnLocationSearchControlSubmit.bind(this);
+        this.handleOnLocationQueryChange = this.handleOnLocationQueryChange.bind(this);
     }
 
     async componentDidMount()
@@ -34,10 +39,25 @@ export default class extends React.Component
         );
     }
 
+    handleOnLocationQueryChange(query)
+    {
+        this.setState({ locationQuery: query })
+    }
+
+    async handleOnLocationSearchControlSubmit()
+    {
+        const response = await fetch(`/api/businesses/?location=${encodeURIComponent(this.state.locationQuery)}`);
+        const businesses = await response.json();
+        this.setState({ businesses });
+    }
+
     render()
     {
         return (
             <React.Fragment>
+                <LocationSearchControl query={this.state.locationQuery}
+                    onQueryChange={this.handleOnLocationQueryChange}
+                    onSubmit={this.handleOnLocationSearchControlSubmit} />
                 <BusinessMap businesses={this.state.businesses} lat={this.state.lat} lon={this.state.lon} />
                 <BusinessList businesses={this.state.businesses} />
             </React.Fragment>
