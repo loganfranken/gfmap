@@ -1,67 +1,50 @@
 import BusinessList from './BusinessList.js';
 import BusinessMap from './BusinessMap.js';
 import LocationSearchControl from './LocationSearchControl.js';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default class extends React.Component
-{
-    constructor(props)
-    {
-        super(props);
-        this.state = {
-            lat: null,
-            lon: null,
-            businesses: [],
-            locationQuery: null
-        }
+// Source: https://whatwebcando.today/articles/use-geolocation-api-promises/
+const getCurrentPosition = () => {
+    return new Promise((resolve, reject) => 
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+    );
+}
 
-        this.handleOnLocationSearchControlSubmit = this.handleOnLocationSearchControlSubmit.bind(this);
-        this.handleOnLocationQueryChange = this.handleOnLocationQueryChange.bind(this);
-    }
+export default () => {
 
-    async componentDidMount()
-    {
-        const position = await this.getCurrentPosition();
+    const [lat, setLat] = useState(null);
+    const [lon, setLon] = useState(null);
+    const [businesses, setBusinesses] = useState([]);
+    const [locationQuery, setLocationQuery] = useState(null);
+
+    useEffect(async () => {
+
+        const position = await getCurrentPosition();
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
 
         const response = await fetch(`/api/businesses/?lat=${lat}&lon=${lon}`);
         const businesses = await response.json();
 
-        this.setState({ lat, lon, businesses });
-    }
+        setLat(lat);
+        setLon(lon);
+        setBusinesses(businesses);
 
-    // Source: https://whatwebcando.today/articles/use-geolocation-api-promises/
-    getCurrentPosition()
-    {
-        return new Promise((resolve, reject) => 
-            navigator.geolocation.getCurrentPosition(resolve, reject)
-        );
-    }
+    });
 
-    handleOnLocationQueryChange(query)
-    {
-        this.setState({ locationQuery: query })
-    }
-
-    async handleOnLocationSearchControlSubmit()
+    async function handleOnLocationSearchControlSubmit()
     {
         const response = await fetch(`/api/businesses/?location=${encodeURIComponent(this.state.locationQuery)}`);
         const businesses = await response.json();
-        this.setState({ businesses });
+        setBusinesses(businesses);
     }
 
-    render()
-    {
-        return (
-            <React.Fragment>
-                <LocationSearchControl query={this.state.locationQuery}
-                    onQueryChange={this.handleOnLocationQueryChange}
-                    onSubmit={this.handleOnLocationSearchControlSubmit} />
-                <BusinessMap businesses={this.state.businesses} lat={this.state.lat} lon={this.state.lon} />
-                <BusinessList businesses={this.state.businesses} />
-            </React.Fragment>
-        )
-    }
+    return <React.Fragment>
+        <LocationSearchControl query={locationQuery}
+            onQueryChange={(query) => { setLocationQuery(query) }}
+            onSubmit={handleOnLocationSearchControlSubmit} />
+        <BusinessMap businesses={businesses} lat={lat} lon={lon} />
+        <BusinessList businesses={businesses} />
+    </React.Fragment>
 
 }
