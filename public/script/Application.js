@@ -30,7 +30,7 @@ export default () => {
         setLon(lon);
         setBusinesses(businesses);
 
-    });
+    }, []);
 
     async function handleOnLocationSearchControlSubmit()
     {
