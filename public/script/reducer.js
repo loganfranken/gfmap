@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import businessesReducer from './features/businesses/businessesSlice'
-import searchLocationReducer from './features/businesses/searchLocationSlice'
+import businessesReducer from './features/businesses/businessesSlice.js'
+import searchLocationReducer from './features/searchLocation/searchLocationSlice.js'
 
 const rootReducer = combineReducers({
     businesses: businessesReducer,
