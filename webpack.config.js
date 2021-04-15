@@ -24,5 +24,8 @@ export default {
     alias: {
       'react-dom': '@hot-loader/react-dom'
     }
+  },
+  devServer: {
+    contentBase: './public/script'
   }
 };
