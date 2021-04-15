@@ -1,5 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
 
-export default ({ businesses }) => <ul id="list">
+const List = styled.ul`
+    list-style: none;
+`
+export default ({ businesses }) => <List>
     {businesses.map(({ id, name, url }) => <li key={id}><a href={url}>{name}</a></li>)}
-</ul>
+</List>
