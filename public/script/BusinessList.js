@@ -3,7 +3,22 @@ import styled from 'styled-components';
 
 const List = styled.ul`
     list-style: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 1em 0 0 0;
+    padding: 1em;
 `
+
+const ListItem = styled.li`
+    margin-bottom: 1.5em;
+`
+
+const Link = styled.a`
+    color: #000;
+    border-bottom: 3px #C73F12 dashed;
+    text-decoration: none;
+`
+
 export default ({ businesses }) => <List>
-    {businesses.map(({ id, name, url }) => <li key={id}><a href={url}>{name}</a></li>)}
+    {businesses.map(({ id, name, url }) => <ListItem key={id}><Link href={url}>{name}</Link></ListItem>)}
 </List>

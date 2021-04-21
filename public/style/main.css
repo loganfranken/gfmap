@@ -1,11 +1,6 @@
-#map
+html, body
 {
-    height: 800px;
-    float: left;
-    width: 50%;
-}
-
-#list
-{
-    float: right;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;   
 }

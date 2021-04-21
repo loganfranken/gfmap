@@ -1,5 +1,11 @@
 import { Loader } from '@googlemaps/js-api-loader';
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
+
+const Map = styled.div`
+    height: 300px;
+    width: 100%;
+`
 
 const loader = new Loader({
     apiKey: "AIzaSyD6C-hEcMKp9egz5A9PPsZLCbySXzX03Cc",
@@ -36,9 +42,5 @@ export default ({ businesses, lat, lon }) => {
         }
     });
 
-    return <div id="map">
-        <ul id="list">
-            {businesses.map(({ name }) => <li>{name}</li>)}
-        </ul>
-    </div>
+    return <Map id="map"></Map>
 }
