@@ -1,7 +1,7 @@
 const initialState = {
     lat: null,
     lon: null,
-    locationQuery: null
+    locationQuery: ''
 }
 
 export default function searchLocationReducer(state = initialState, action)

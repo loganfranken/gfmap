@@ -2,7 +2,28 @@ import BusinessList from './BusinessList.js';
 import BusinessMap from './BusinessMap.js';
 import LocationSearchControl from './LocationSearchControl.js';
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+
+const HeaderWrapper = styled.div`
+    background: #C73F12;
+    width: 100%;
+`
+
+const Header = styled.header`
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 720px;
+`
+
+const Title = styled.h1`
+    color: #FFF;
+    font-size: 1.3em;
+    margin: 0;
+    padding: 0.75em;
+    padding-bottom: 0;
+`
 
 // Source: https://whatwebcando.today/articles/use-geolocation-api-promises/
 const getCurrentPosition = () => {
@@ -39,9 +60,14 @@ export default () => {
     }
 
     return <React.Fragment>
-        <LocationSearchControl query={searchLocation.locationQuery}
-            onQueryChange={(query) => { setLocationQuery(query) }}
-            onSubmit={handleOnLocationSearchControlSubmit} />
+        <HeaderWrapper>
+            <Header>
+                <Title>GFMap</Title>
+                <LocationSearchControl query={searchLocation.locationQuery}
+                    onQueryChange={(query) => { setLocationQuery(query) }}
+                    onSubmit={handleOnLocationSearchControlSubmit} />
+            </Header>
+        </HeaderWrapper>
         <BusinessMap businesses={businesses} lat={searchLocation.lat} lon={searchLocation.lon} />
         <BusinessList businesses={businesses} />
     </React.Fragment>

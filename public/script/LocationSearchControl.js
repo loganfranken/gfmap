@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 const Form = styled.form`
     background: #C73F12;
-    display: flex;
     padding: 1em;
 `
 
@@ -15,14 +14,20 @@ const Input = styled.input`
     flex-grow: 1;
     margin-right: 10px;
     outline: none;
+    max-width: 25em;
 `
 
 const Button = styled.button`
     background: none;
+    background-image: url(../images/magnifying_glass.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
     border: 0;
     color: #FFF;
     font-weight: bold;
     padding: 0.5em;
+    text-indent: -9999em;
+    width: 1.5em;
 `
 
 export default ({ query, onSubmit, onQueryChange }) => <Form onSubmit={(event) => { event.preventDefault(); onSubmit(); }}>

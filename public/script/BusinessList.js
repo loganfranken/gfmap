@@ -5,7 +5,8 @@ const List = styled.ul`
     list-style: none;
     font-size: 1.5em;
     font-weight: bold;
-    margin: 1em 0 0 0;
+    margin: 1em auto 0;
+    max-width: 30em;
     padding: 1em;
 `
 
