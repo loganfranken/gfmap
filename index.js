@@ -42,7 +42,15 @@ router.get('/api/businesses/', async (ctx) => {
 
   const response = await yelpClient.search(searchInfo);
 
-  ctx.body = response.jsonBody.businesses.map(business => ({
+  ctx.body = {
+    businesses: [],
+    location: {
+      latitude: response.jsonBody.region.center.latitude,
+      longitude: response.jsonBody.region.center.longitude
+    }
+  };
+
+  ctx.body.businesses = response.jsonBody.businesses.map(business => ({
     id: business.alias,
     name: business.name,
     url: business.url,

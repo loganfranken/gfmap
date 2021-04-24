@@ -45,18 +45,20 @@ export default () => {
         const lon = position.coords.longitude;
 
         const response = await fetch(`/api/businesses/?lat=${lat}&lon=${lon}`);
-        const businesses = await response.json();
+        const data = await response.json();
         
-        dispatch({ type: 'searchLocation/coordinatesChanged', payload: { lat, lon } });
-        dispatch({ type: 'businesses/changed', payload: businesses });
+        dispatch({ type: 'searchLocation/coordinatesChanged', payload: { lat: data.location.latitude, lon: data.location.longitude } });
+        dispatch({ type: 'businesses/changed', payload: data.businesses });
 
     }, []);
 
     async function handleOnLocationSearchControlSubmit()
     {
-        const response = await fetch(`/api/businesses/?location=${encodeURIComponent(this.state.locationQuery)}`);
-        const businesses = await response.json();
-        setBusinesses(businesses);
+        const response = await fetch(`/api/businesses/?location=${encodeURIComponent(searchLocation.locationQuery)}`);
+        const data = await response.json();
+        
+        dispatch({ type: 'searchLocation/coordinatesChanged', payload: { lat: data.location.latitude, lon: data.location.longitude } });
+        dispatch({ type: 'businesses/changed', payload: data.businesses });
     }
 
     return <React.Fragment>
@@ -64,7 +66,7 @@ export default () => {
             <Header>
                 <Title>GFMap</Title>
                 <LocationSearchControl query={searchLocation.locationQuery}
-                    onQueryChange={(query) => { setLocationQuery(query) }}
+                    onQueryChange={(query) => { dispatch({ type: 'searchLocation/queryChanged', payload: query }); }}
                     onSubmit={handleOnLocationSearchControlSubmit} />
             </Header>
         </HeaderWrapper>
