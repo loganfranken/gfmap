@@ -4,3 +4,14 @@ html, body
     margin: 0;
     padding: 0;   
 }
+
+.google-maps-link
+{
+    color: #000;
+    display: block;
+    border-bottom: 3px #C73F12 dashed;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0.5em;
+    text-decoration: none;
+}

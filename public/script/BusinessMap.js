@@ -7,13 +7,31 @@ const Map = styled.div`
     width: 100%;
 `
 
+var map = null;
+var markers = [];
+var infoWindows = [];
+
 const loader = new Loader({
     apiKey: "AIzaSyD6C-hEcMKp9egz5A9PPsZLCbySXzX03Cc",
     version: "weekly",
 });
 
-var map = null;
-var markers = [];
+const setUpInfoWindow = (marker, business) => {
+    const infoWindow = new google.maps.InfoWindow();
+
+    marker.addListener('click', () => {
+        infoWindow.setContent(`<a class="google-maps-link" href="${business.url}">${business.name}</a>`);
+        infoWindows.forEach((infoWindow) => { infoWindow.close(); });
+        infoWindow.open(map, marker);
+    });
+
+    infoWindows.push(infoWindow);
+};
+
+const clearMap = () => {
+    markers.forEach(marker => { marker.setMap(null); });
+    infoWindows = [];
+}
 
 const updateMap = (businesses, lat, lon) => {
 
@@ -31,13 +49,21 @@ const updateMap = (businesses, lat, lon) => {
     }
 
     // Erase all of the current markers
-    markers.forEach(marker => { marker.setMap(null); });
+    clearMap();
 
     // Add markers for all of the businesses
-    markers = businesses.map(business => new google.maps.Marker({
-        position: { lat: business.coordinates.latitude, lng: business.coordinates.longitude },
-        map
-    }));
+    businesses.forEach(business => {
+
+        const marker = new google.maps.Marker({
+            position: { lat: business.coordinates.latitude, lng: business.coordinates.longitude },
+            title: business.name,
+            map
+        });
+
+        markers.push(marker);
+        setUpInfoWindow(marker, business);
+
+    });
 }
 
 export default ({ businesses, lat, lon }) => {
