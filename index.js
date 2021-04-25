@@ -14,7 +14,7 @@ router.get('/api/businesses/', async (ctx) => {
   const lon = ctx.request.query.lon;
   const location = ctx.request.query.location;
 
-  const searchInfo = { term: 'gluten free', radius: 8000 };
+  const searchInfo = { term: 'gluten free', radius: 1000, limit: 50, sort_by: 'distance' };
 
   if(typeof location !== 'undefined')
   {

@@ -3,6 +3,9 @@ import styled from 'styled-components';
 
 const Form = styled.form`
     background: #C73F12;
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
     padding: 1em;
 `
 
