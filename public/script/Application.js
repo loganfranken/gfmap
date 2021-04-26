@@ -3,10 +3,15 @@ import BusinessMap from './BusinessMap.js';
 import LocationSearchControl from './LocationSearchControl.js';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
+const DefaultTheme = {
+    backgroundColor: '#C73F12'
+}
+
 const HeaderWrapper = styled.div`
-    background: #C73F12;
+    background: ${props => props?.theme?.backgroundColor};
     width: 100%;
 `
 
@@ -61,7 +66,7 @@ export default () => {
         dispatch({ type: 'businesses/changed', payload: data.businesses });
     }
 
-    return <React.Fragment>
+    return <ThemeProvider theme={DefaultTheme}>
         <HeaderWrapper>
             <Header>
                 <Title>GFMap</Title>
@@ -72,6 +77,6 @@ export default () => {
         </HeaderWrapper>
         <BusinessMap businesses={businesses} lat={searchLocation.lat} lon={searchLocation.lon} />
         <BusinessList businesses={businesses} />
-    </React.Fragment>
+    </ThemeProvider>
 
 }

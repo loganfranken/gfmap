@@ -16,7 +16,7 @@ const ListItem = styled.li`
 
 const Link = styled.a`
     color: #000;
-    border-bottom: 3px #C73F12 dashed;
+    border-bottom: 3px ${props => props?.theme?.backgroundColor} dashed;
     text-decoration: none;
 `
 
